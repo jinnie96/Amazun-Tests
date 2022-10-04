@@ -1,22 +1,23 @@
 const { test, expect } = require('@playwright/test')
 
+test.beforeEach(async ( {page}, testInfo) => {
+    await page.goto('https://amazon-solo-clone.herokuapp.com/');
+})
 test.describe('Authentication', () => {
     test('should redirect user to sign in page', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Books at Amazun').click();
         await page.locator('text=Hello, Sign in').click();
         await expect(page).toHaveURL('https://amazon-solo-clone.herokuapp.com/login');
         await page.screenshot({ path: 'sign_in.png'})
     });
 
+
     test('should redirect user to sign up page', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Sign Up').click();
         await expect(page).toHaveURL('https://amazon-solo-clone.herokuapp.com/sign-up');
     });
 
     test('should login user as demo', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Hello, Sign in').click();
         await expect(page).toHaveURL('https://amazon-solo-clone.herokuapp.com/login');
         await page.locator('[placeholder="Email"]').click();
@@ -31,7 +32,6 @@ test.describe('Authentication', () => {
 
 test.describe('Products', () => {
     test('should allow logged in user to view products on page', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Hello, Sign in').click();
         await page.locator('text=Demo').click();
         await page.locator('text=$12.99Game of Thronesby George R.R. Martin').click();
@@ -41,7 +41,6 @@ test.describe('Products', () => {
 
 test.describe('Cart', () => {
     test('should allow logged in user to view products in cart', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Hello, Sign in').click();
         await page.locator('text=Demo').click();
         await page.locator('text=Game of Thrones').click();
@@ -52,7 +51,6 @@ test.describe('Cart', () => {
     });
 
     test('allow users to delete products from their carts', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Hello, Sign in').click();
         await page.locator('text=Demo').click();
         await page.locator('text=Game of Thrones').click();
@@ -68,7 +66,6 @@ test.describe('Cart', () => {
 test.describe('Reviews', () => {
 
     test('redirect users to edit page', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Demo').click();
         await page.locator('text=$12.99Game of Thronesby George R.R. Martin >> #photoSize').click();
         await page.locator('text=Edit Review').click();
@@ -76,7 +73,6 @@ test.describe('Reviews', () => {
     });
 
     test('users are able to delete reviews', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Demo').click();
         await page.locator('text=$12.99Game of Thronesby George R.R. Martin >> #photoSize').click();
         await page.locator('text=Delete Review').click();
@@ -85,7 +81,6 @@ test.describe('Reviews', () => {
     });
 
     test('users are able to create new reviews', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Demo').click();
         await page.locator('text=$12.99Game of Thronesby George R.R. Martin >> #photoSize').click();
         await page.locator('text=Write a customer review').click();
@@ -102,7 +97,6 @@ test.describe('Reviews', () => {
     });
 
     test('users are able to edit existing reviews', async ({ page }) => {
-        await page.goto('https://amazon-solo-clone.herokuapp.com/');
         await page.locator('text=Demo').click();
         await page.locator('text=$12.99Game of Thronesby George R.R. Martin >> #photoSize').click();
         await page.locator('text=Edit Review').first().click();
